@@ -1,0 +1,2 @@
+objBtn = document.querySelector('.asteroid-btn')
+objBtn.addEventListener('mouseover', function() {alert("HI")})

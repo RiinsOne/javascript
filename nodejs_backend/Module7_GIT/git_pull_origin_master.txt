@@ -1,0 +1,11 @@
+This should work for every default repo:
+
+git pull origin master
+
+If your default branch is different than master, you will need to specify the branch name:
+
+git pull origin my_default_branch_name
+
+
+
+//

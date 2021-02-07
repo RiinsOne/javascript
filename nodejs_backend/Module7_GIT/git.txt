@@ -1,0 +1,313 @@
+https://git-scm.com/book/ru/v2
+
+MacOS: brew install git
+Ubuntu/Debian: sudo apt install git
+Windows: choco install git (Chocolatey либо Git for Windows, если вы не знакомы с пакетными менеджерами)
+
+$ git --version
+
+$ git config --global user.name "Mona Lisa"
+$ git config --global user.email "mona@lisa.io"
+
+
+~$ mkdir example
+~$ cd example/
+# Команда инициализации
+example$ git init
+Initialized empty Git repository in .../example/.git/
+
+example$ ls -la
+total 0
+drwxr-xr-x   3 mokevnin  wheel   96 Mar  4 08:51 .
+drwxrwxrwt  11 root      wheel  352 Mar  4 08:50 ..
+drwxr-xr-x   9 mokevnin  wheel  288 Mar  4 08:51 .git
+
+в файле .git/config
+
+example$ git status
+On branch master
+
+No commits yet
+
+nothing to commit (create/copy files and use "git add" to track)
+
+
+tmp$ git status
+fatal: Not a git repository (or any of the parent directories): .git
+
+
+# Создаём файл
+example$ touch README.md
+# Меняем содержимое
+example$ echo '# Hi' > README.md
+# Так Git увидит новый файл
+example$ git add README.md
+ # Коммит с сообщением 'init project'
+example$ git commit -m 'init project'
+[master (root-commit) 679e31d] init project
+ 1 file changed, 1 insertion(+)
+ create mode 100644 README.md
+
+
+ Дальнейший рабочий процесс выглядит так:
+
+     Добавляем или изменяем файлы и директории.
+     Подготавливаем новое содержимое к коммиту командой git add. Эту команду нужно применять даже в том случае, если файл был просто изменён.
+     Выполняем коммит.
+
+     example$ echo 'my first change' >> README.md # Добавляем новую строку в файл
+     example$ git add README.md # Подготовка к коммиту
+     example$ git commit -m 'update readme'
+     [master 3a64fcc] update readme
+      1 file changed, 1 insertion(+)
+
+     example$ cat README.md
+     # Hi
+     my first change
+
+
+
+example$ git log
+
+     commit 3a64fccf14725593b7486ff09d6a6c325a5f8fcc
+     Author: Kirill Mokevnin <mokevnin@gmail.com>
+     Date:   Mon Jun 26 15:01:22 2017 +0300
+
+         update readme
+
+     commit 679e31d62ac734e3074f092e417ba741be767a0d
+     Author: Kirill Mokevnin <mokevnin@gmail.com>
+     Date:   Mon Jun 26 14:35:47 2017 +0300
+
+         init project
+
+
+
+commit 3a64fccf14725593b7486ff09d6a6c325a5f8fcc
+Author: Kirill Mokevnin <mokevnin@gmail.com>
+Date:   Mon Jun 26 15:01:22 2017 +0300
+
+    update readme
+
+diff --git a/README.md b/README.md
+index 76f177f..13f5a93 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,2 @@
+ # Hi
++my first change
+
+commit 679e31d62ac734e3074f092e417ba741be767a0d
+Author: Kirill Mokevnin <mokevnin@gmail.com>
+Date:   Mon Jun 26 14:35:47 2017 +0300
+
+    init project
+
+diff --git a/README.md b/README.md
+new file mode 100644
+index 0000000..76f177f
+--- /dev/null
++++ b/README.md
+@@ -0,0 +1 @@
++# Hi
+
+
+
+
+$ git show 3a64fccf14725593b7486ff09d6a6c325a5f8fcc
+
+diff --git a/README.md b/README.md
+index 76f177f..13f5a93 100644
+--- a/README.md
++++ b/README.md
+@@ -1 +1,2 @@
+ # Hi
++my first change
+
+
+$ git show 3a64fcc
+Достаточно указать только первые 7 символов идентификатора
+
+
+
+git reset path/to/file переводит файл из состояния staged в modified
+git checkout path/to/file переводит файл из состояния modified в unmodified, то есть по сути эта команда сбрасывает изменения.
+
+
+git_course$ git status
+On branch master
+Your branch is up-to-date with 'origin/master'.
+nothing to commit, working tree clean
+
+racket$ git branch
+* master
+
+
+racket$ git branch new-feature # создание новой ветки
+racket$ git branch
+* master
+  new-feature
+
+racket$ git checkout new-feature # переключение на новую ветку
+Switched to branch 'new-feature'
+
+racket$ git branch
+  master
+* new-feature
+
+racket$ git log --oneline --decorate --graph
+
+
+* c082d77 (HEAD -> new-feature, master) fix stripping
+* 442c2fd Correct typo
+* b2b53d6 fix test that uses IPv6
+
+
+racket$ git checkout ed8145e
+racket$ git status
+HEAD detached at ed8145e
+
+racket$ git checkout master
+Previous HEAD position was ed8145e... fix doc typo
+Switched to branch 'master'
+
+
+racket$ ls .git/refs/heads/
+master      new-feature
+
+racket$ cat .git/refs/heads/new-feature
+c082d77c971f7a042cf69de9df150c80e9384b71
+
+racket$ cat .git/HEAD
+ref: refs/heads/new-feature
+
+
+racket$ git checkout master
+racket$ git merge new-feature
+Updating c082d77..d7b64b2
+Fast-forward
+ INSTALL.txt | 1 +
+ 1 file changed, 1 insertion(+)
+
+
+
+
+
+
+ $ mkdir example_bare
+ $ cd example_bare
+ example_bare$ git init --bare
+
+
+ example_bare$ ls
+ HEAD    config    description    hooks    info    objects    refs
+
+
+$ cd /tmp
+# Переименуем папку клонированного репозитория для того чтобы не путаться
+tmp$ git clone ~/example_bare clone_of_example
+Cloning into 'clone_of_example'...
+done.
+
+tmp$ cd clone_of_example
+
+
+clone_of_example$ git remote -v
+# В вашем случае путь будет отличаться,
+# он зависит от операционной системы и того где вы инициализировали репозиторий
+origin  /home/user/example_bare (fetch)
+origin  /home/user/example_bare (push)
+
+# То же самое через чтение конфига
+clone_of_example$ cat .git/config
+[remote "origin"]
+    url = /home/user/example_bare
+    fetch = +refs/heads/*:refs/remotes/origin/*
+
+
+clone_of_example$ echo '# Hello' > README.md
+clone_of_example$ git add README.md
+clone_of_example$ git commit -am 'add readme'
+[master 144d274] replace readme
+ 1 file changed, 1 insertion(+), 0 deletions(-)
+
+# Отправка
+clone_of_example$ git push origin master
+Counting objects: 3, done.
+Writing objects: 100% (3/3), 253 bytes | 0 bytes/s, done.
+Total 3 (delta 0), reused 0 (delta 0)
+To /home/user/example_bare
+   3a64fcc..144d274  master -> master
+
+
+Отслеживаемая ветка устанавливается командой git push --set-upstream origin master
+
+
+clone_of_example$ cat .git/config
+[branch "master"]
+    remote = origin
+    merge = refs/heads/master
+
+
+racket$ git log --oneline --decorate --graph
+* d7b64b2 (HEAD -> master, new-feature) implement new feature
+* c082d77 (origin/master, origin/HEAD) fix stripping
+* 442c2fd Correct typo
+* b2b53d6 fix test that uses IPv6
+
+
+
+# Пример клонирования репозитория https://github.com/Hexlet/ru-test-assignments в директорию /tmp
+
+# Клонирование
+tmp$ git clone https://github.com/Hexlet/ru-test-assignments.git
+Cloning into 'ru-test-assignments'...
+remote: Counting objects: 127, done.
+remote: Compressing objects: 100% (9/9), done.
+remote: Total 127 (delta 4), reused 4 (delta 1), pack-reused 112
+Receiving objects: 100% (127/127), 22.84 KiB | 135.00 KiB/s, done.
+Resolving deltas: 100% (34/34), done.
+
+# Переход в папку с проектом
+tmp$ cd ru-test-assignments
+ru-test-assignments$ ls
+README.md
+
+# Здесь какие-то изменения README.md
+
+# Проверка состояния
+ru-test-assignments$ git status
+On branch master
+Your branch is up to date with 'origin/master'.
+
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+    modified:   README.md
+
+no changes added to commit (use "git add" and/or "git commit -a")
+
+# Добавление изменения в индекс
+ru-test-assignments$ git add README.md
+
+# Коммит
+ru-test-assignments$ git commit -m 'update readme'
+[master dbd23b9] update readme
+ 1 file changed, 16 insertions(+), 16 deletions(-)
+
+# Отправка изменений на GitHub
+ru-test-assignments$ git push
+Counting objects: 3, done.
+Delta compression using up to 4 threads.
+Compressing objects: 100% (2/2), done.
+Writing objects: 100% (3/3), 346 bytes | 346.00 KiB/s, done.
+Total 3 (delta 1), reused 0 (delta 0)
+remote: Resolving deltas: 100% (1/1), completed with 1 local object.
+To github.com:Hexlet/ru-test-assignments.git
+   80d23b1..dbd23b9  master -> master
+
+
+
+
+//

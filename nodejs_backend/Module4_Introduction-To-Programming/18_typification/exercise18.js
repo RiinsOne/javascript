@@ -1,0 +1,60 @@
+/*
+addDigits.js
+Реализуйте и экспортируйте по умолчанию функцию addDigits, которая работает следующим образом:
+
+Дано неотрицательное целое число num. Складывать все входящие в него цифры до тех пор, пока не останется одна цифра.
+
+Для числа 38 процесс будет выглядеть так:
+
+3 + 8 = 11
+1 + 1 = 2
+Результат: 2
+
+Пример:
+
+addDigits(10); // 1
+addDigits(19); // 1
+addDigits(38); // 2
+addDigits(1259); // 8
+Подсказка
+Выделите процесс суммирования цифр в числе в отдельную функцию
+*/
+
+// import { length } from './strings'; // eslint-disable-line
+
+function ogWrite(n) { // eslint-disable-line no-unused-vars
+  document.write(n);
+  document.write('<br>');
+}
+
+const print = (n) => { // eslint-disable-line no-unused-vars
+  document.write(n);
+  document.write('<br>');
+};
+
+const length = n => n.length;
+
+// BEGIN (write your solution here)
+
+const sum = (str) => {
+  let result = 0;
+  for (let i = 0; i < length(str); i += 1) {
+    result += Number(str[i]);
+    print(result);
+  }
+
+  return result;
+};
+
+const addDigits = (num) => {
+  let result = num;
+  while (result >= 10) {
+    result = sum(String(result));
+  }
+  return result;
+};
+// END
+
+ogWrite(addDigits(5522315));
+
+// export default addDigits;

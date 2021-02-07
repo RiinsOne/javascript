@@ -1,0 +1,11 @@
+$ npx babel script.js --out-file script-compiled.js --source-maps inline
+
+
+
+Как автоматически сгенерировать source map для всех файлов в
+папке dist при сборке пакета?
+Добавить babel src --out-dir dist --source-maps
+в значение ключа build секции scripts
+
+
+//

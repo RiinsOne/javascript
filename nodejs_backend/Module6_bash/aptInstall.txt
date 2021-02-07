@@ -1,0 +1,97 @@
+Пакетный менеджер
+
+Ubuntu - apt
+MacOS - brew
+Windows - Chocolatey
+
+$ sudo apt install php
+# Здесь будет много текста и вопрос, устанавливать ли? Если да, то установится php
+$ php -v
+PHP 7.2.7 (cli) (built: Jun 22 2018 06:27:50) ( NTS )
+
+$ apt install php
+E: Could not open lock file /var/lib/dpkg/lock - open (13: Permission denied)
+E: Unable to lock the administration directory (/var/lib/dpkg/), are you root?
+
+$ apt remove php
+# Тут тоже много вывода и вопрос, удалять ли?
+
+# Пакета wrongname не существует
+$ sudo apt install wrongname
+Reading package lists... Done
+Building dependency tree
+Reading state information... Done
+E: Unable to locate package wrongname
+
+$ sudo apt update
+# Теперь можно устанавливать
+$ sudo apt install php
+Обновление локального индекса (или обновление каталогов репозиториев)
+
+В nodejs (серверный javascript) пакетный менеджер npm,
+в php — composer, в ruby — gem, в python — pip.
+
+Установите программу tree, используя пакетный менеджер и запустите её.
+Она выводит список файлов в виде дерева.
+
+
+
+
+
+
+Выполнение программ
+
+~$ echo $PATH
+/home/hex/.local/bin:/home/hex/bin/:/home/hex/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+~$ wrongname
+bash: wrongname: command not found
+
+~$ type cp
+cp is /bin/cp
+~$
+~$ whereis cp
+cp: /bin/cp
+~$
+~$ which cp
+/bin/cp
+~$
+~$ ls -al /bin | grep cp
+-rwxr-xr-x 1 root root  141528 Jan 18  2018 cp
+
+~$ pwd
+/home/hex
+~$ cd test/
+~/test$ ls -al
+total 16
+drwxr-xr-x 2 hex hex 4096 Sep 10 15:24 .
+drwxr-xr-x 1 hex hex 4096 Sep 10 15:24 ..
+-rwxr-xr-x 1 hex hex   60 Sep 10 15:24 executable
+~/test$ executable
+bash: executable: command not found
+~/test$ ./executable
+Hello from executable!
+~/test$
+
+Для ручного изменения переменной PATH
+    .bashrc
+    .bash_profile
+    .profile
+
+export PATH=$PATH:/path/to/directory
+Где /path/to/directory путь до директории с исполняемыми файлами.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

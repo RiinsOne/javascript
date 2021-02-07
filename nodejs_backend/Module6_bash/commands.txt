@@ -1,0 +1,272 @@
+ls            посмотреть содержимое
+ls -a         скрытые файлы и директории, начинаются с точки
+ls Public/    содержимое папки
+ls -l         доп информация по каждому файлу
+ls -a -l тоже самое что и ls -al, ls -la
+
+locate passwd
+выдает все известные файлы
+whereis passwd
+
+
+man ls        мануал программы ls
+
+https://explainshell.com/   полезный сайт
+
+pvp -v, тоже самое, что и php --version
+узнать версию программы и доп инфу
+
+ls -l -S --time-style=long-iso /var   или ls -lS
+вывести всю информацию о файлах с сортировкой по размеру
+и с датой
+
+Информация о любом файле или директории доступна по команде stat
+
+https://ru.wikipedia.org/wiki/FHS
+стандарт, унифицирующий местонахождение файлов и
+каталогов с общим назначением в файловой системе UNIX
+
+Hard Link — дополнительное имя для уже существующего файла.
+Symbolic link — символическая ссылка, такой файл похож на ярлык в Windows. Если удалить основной файл, то символическая ссылка начнёт вести в никуда.
+Socket — специальный файл через который происходит взаимодействие между разными процессами операционной системы. Программисты постоянно сталкиваются с сокетами в реальной жизни.
+
+cat     прочитать файл
+man cat
+
+head .bashrc    первые 10 строк
+tail            последние 10 строк
+tail -n 2 .bashrc     показать две последних строки
+
+tail -f path/to/file
+не просто выводит последние строчки файла, но ждёт появления новых.
+Как только файл дописывается, tail сразу выводит на экран
+добавленные строки.
+
+Для программ, которые захватывают строки, нужно использовать Ctrl+C
+
+less    называют пейджером, позволяет перемещаться по файлу
+вперед и назад
+q - выход
+f - вперед на страницу
+b - назад на страницу
+/ - затем вводить буквы и enter, то будет поиск текста
+n - переход к следующему совпадению
+N - к предыдущему
+
+grep - поиск по файлу или файлам определённого текста
+man grep
+
+grep aliases .bashrc
+Поиск всех строк в файле .bashrc, в которых встречается слово aliases
+
+-B    строки до искомого
+-A    строки после
+-C    до и после
+grep -C 1 aliases .bashrc
+
+grep -R bashrc .
+Поиск совпадений на bashrc в файлах и директориях внутри
+
+grep -Rn bashrc .
+выводить ещё и номер строки
+
+grep then /home/tirion/.bashrc
+или
+cat /home/tirion/.bashrc | grep then
+
+nano .bashrc    редактор nano
+Ctrl+x выйти из редактора
+
+vim, esc или Ctrl+[ выйти из режима ввода,
+i попасть в режим ввода,
+:q! выйти без сохранения
+:wq выйти и сохранить
+:w просто сохранить без выхода
+
+ls -la > output
+сохранить вывод ls -la в файл output, который появится в текущей директории
+данная операция называется - перенаправление потоков
+> - всегда перезаписывает файл
+
+grep alias .bash_profile > result
+cat result
+alias fixssh='eval $(tmux showenv -s SSH_AUTH_SOCK)'
+
+>> добавлять, а не перезаписывать
+
+echo 'hello' > result
+echo 'hello' >> result
+cat result
+hello
+hello
+
+# Флаг l (l а не 1) говорит о том, что надо считать количество строк
+$ wc -l < result
+2
+
+$ wc -l < result > output
+$ cat output
+$ 2
+
+$ cd lala
+-bash: cd: lala: No such file or directory
+
+$ cd lala > output
+-bash: cd: lala: No such file or directory
+
+# Сначала STDERR перенаправляется в STDOUT, затем STDOUT в файл
+$ cd lala > output 2>&1
+$ cat output
+-bash: cd: lala: No such file or directory
+Конструкцию 2>&1 нужно просто запомнить, она говорит о том,
+что поток с номером 2 отправляем в поток с номером 1
+STDIN — 0, STDOUT — 1, STDERR — 2
+
+#  STDERR просто перенаправляется в другой поток (STDOUT)
+$ cd lala 2>&1
+-bash: cd: lala: No such file or directory
+
+# Сначала STDERR перенаправляется в STDOUT, затем STDOUT в файл
+$ cd lala &> output
+$ cat output
+-bash: cd: lala: No such file or directory
+
+
+Пайплайн (Конвейер)
+
+$ grep alias .bashrc | grep color
+# enable color support of ls and also add handy aliases
+alias ls='ls --color=auto'
+#alias dir='dir --color=auto'
+#alias vdir='vdir --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+$ cat .bashrc | grep alias | grep color
+
+cat source | grep Dog | uniq | sort
+1. Читается файл source
+2. Входные данные грепаются по подстроке "Dog"
+3. Убираются дубли (в исходном файле две одинаковых строки "Dog")
+4. Входные данные сортируются и выводятся на экран
+
+cat languages | sort | head -2
+
+
+
+Манипулирование файловой структурой
+
+# В текущей директории создаётся пустой файл
+touch empty-file
+
+rm empty-file
+удалить файл
+
+touch file
+mv file renamed-file
+переименование равносильно перемещению
+
+cp renamed-file renamed-file-copy
+
+mkdir my-dir
+
+mkdir one/two/three
+mkdir: cannot create directory ‘one/two/three’: No such file or directory
+
+mkdir -p one/two/three
+создать директории рекурсивно
+
+rm my-dir/
+rm: cannot remove 'my-dir/': Is a directory
+
+rm -r my-dir
+удалять директории только рекурсивно
+
+rm -rf one
+удалить все файлы в директориях без вопросов
+
+
+
+Переменные окружения
+
+$ env
+посмотреть установленные переменные
+
+# Для вывода переменной используется echo, а перед самой переменной ставится знак $.
+$ echo $HOME
+/home/kirill.m
+# Для установки знак $ не нужен.
+# Очень важно чтобы не было пробелов вокруг знака равно
+$ HOME=/tmp
+
+# Достаточно выполнить присваивание слева от запускаемой команды
+$ HOME=/tmp cd
+/tmp$ pwd
+/tmp
+
+$ cd
+~$ pwd
+/home/kirill.m
+~$ echo $HOME
+/home/kirill.m
+
+~$ export HOME=/tmp
+/home/kirill.m$ cd
+~$ pwd
+/tmp
+~$ echo $HOME
+/tmp
+
+
+
+История
+
+$ tail .bash_history
+rm -r one/
+env
+HOME=/tmp cd
+pwd
+cd
+echo $HOME
+export HOME=/tmp
+id
+exit
+id
+
+
+history     посмотреть историю команд
+history 5   5 последних команд
+
+$ history | grep export
+  174  export HOME=/tmp
+  183  history | grep export
+
+Ctrl+r    реверсивный поиск
+
+echo $HISTFILESIZE
+размер файла истории
+
+
+
+
+
+
+$ diff index.js index2.js > index.patch
+
+1c1
+< const a = 5;
+---
+> const a = 8;
+3a4
+> console.log(a - b);
+
+$ patch index.js -i index.patch -o index2.js
+
+
+
+
+
+
+
+//

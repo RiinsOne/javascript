@@ -1,0 +1,35 @@
+# Ниже показан процесс публикации пакета из репозитория https://github.com/hexlet-boilerplates/nodejs-package
+$ cd nodejs-package
+$ npm publish
+
+> nodejs-package@0.0.2 prepublishOnly .
+> npm run build
+
+
+> nodejs-package@0.0.2 build /Users/mokevnin/projects/nodejs-package
+> NODE_ENV=production babel src --out-dir dist --source-maps inline
+
+src/bin/hexlet.js -> dist/bin/hexlet.js
+src/half.js -> dist/half.js
+src/index.js -> dist/index.js
++ nodejs-package@0.0.2
+
+
+И для полноты картины еще два способа найти нужный пакет и убедиться, что он есть в NPM хранилище:
+
+    Поискать на сайте https://www.npmjs.com/
+    Выполнить команду npm info nodejs-package. Если вы увидите информацию о пакете, то все хорошо. В противном случае возникнет ошибка.
+
+
+
+
+
+
+
+
+
+
+
+
+
+//

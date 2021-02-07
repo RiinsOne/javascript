@@ -1,0 +1,34 @@
+# Глобальная установка пакета sloc
+$ sudo npm install -g sloc
+Password:
+/usr/local/bin/sloc -> /usr/local/lib/node_modules/sloc/bin/sloc
++ sloc@0.2.0
+updated 1 package in 3.701s
+
+
+# Создайте файл index.js в любом месте вашей файловой системы и добавьте туда любой код (например, печать на экран)
+# Затем вызовите программу sloc, используя терминал. Для этого перейдите в директорию, содержащую этот файл, и выполните команду:
+$ sloc index.js
+
+---------- Result ------------
+
+            Physical :  2
+              Source :  2
+             Comment :  0
+ Single-line comment :  0
+       Block comment :  0
+               Mixed :  0
+               Empty :  0
+               To Do :  0
+
+Number of files read :  1
+
+------------------------------
+
+
+
+
+
+
+
+//

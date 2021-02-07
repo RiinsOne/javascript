@@ -1,0 +1,113 @@
+Users and Groups
+
+whoami
+кто я такой
+
+ps aus
+какой процесс под каким пользователем запущен
+
+id
+посмотреть свой идентификатор
+
+cat /etc/passwd
+освновное хранилище пользователей в системе
+
+
+
+
+
+
+Sudo
+
+sudo
+основной способ повышать привилегии
+
+# Нет прав на выполнение
+$ touch /etc/myfile
+touch: cannot touch '/etc/myfile': Permission denied
+
+# С sudo все работает
+$ sudo touch /etc/myfile
+
+# Видно что владелец файла root
+$ stat /etc/myfile
+  File: '/etc/myfile'
+  Size: 0           Blocks: 0          IO Block: 4096   regular empty file
+Device: ca01h/51713d    Inode: 2761        Links: 1
+Access: (0644/-rw-r--r--)  Uid: (    0/    root)   Gid: (    0/    root)
+
+# Нет прав на удаление
+$ rm /etc/myfile
+rm: remove write-protected regular empty file '/etc/myfile'? y
+rm: cannot remove '/etc/myfile': Permission denied
+
+# Опять помогло sudo
+$ sudo rm /etc/myfile
+$
+
+$ sudo -u nobody mkdir /tmp/test
+# Файл создан от nobody
+$ stat /tmp/test
+  File: '/tmp/test'
+  Size: 4096        Blocks: 8          IO Block: 4096   directory
+Device: ca01h/51713d    Inode: 4577        Links: 2
+Access: (0755/drwxr-xr-x)  Uid: (65534/  nobody)   Gid: (65534/ nogroup)
+
+$ sudo -i
+$ id
+uid=0(root) gid=0(root) groups=0(root)
+
+
+
+Permissions
+
+$ touch /etc/myfile
+touch: cannot touch '/etc/myfile': Permission denied
+
+# Пример строчки из вывода команды ls -la
+-rw-r--r-- 1 kirill.m kirill.m 3771 Aug 31  2015 .bashrc
+
+$ ls -la /home/ | grep kirill
+drwxr-xr-x  5 kirill.m          kirill.m          4096 Aug 29 11:34 kirill.m
+
+
+    A 	B 	        C 	   D
+1 	# 	Permission 	rwx 	Binary
+2 	7 	read, write and execute 	rwx 	111
+3 	6 	read and write 	rw- 	110
+4 	5 	read and execute 	r-x 	101
+5 	4 	read only 	r-- 	100
+6 	3 	write and execute 	-wx 	011
+7 	2 	write only 	-w- 	010
+8 	1 	execute only 	--x 	001
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
